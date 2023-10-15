@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
+    /// If you want to improve this app and add other units rather than Temperature,
+    /// visit this link to choose another one between the list:
+    /// https://www.hackingwithswift.com/100/swiftui/19
+    
     @State private var inputTemperature: Double? = nil
     @FocusState private var isTemperatureFocused: Bool
     
