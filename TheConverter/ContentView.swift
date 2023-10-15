@@ -10,37 +10,25 @@ struct ContentView: View {
         case farenheit
         case kelvin
         
-        func getConversionFunction(to targetUnit: TemperatureUnit) -> ((Double) -> (Double)) {
+        func getFormula(to targetUnit: TemperatureUnit) -> ((Double) -> (Double)) {
             switch (self, targetUnit) {
             case (.celsius, .farenheit):
-                return { (input: Double) -> Double in
-                    return (input * 9 / 5) + 32
-                }
+                return farenheit(fromCelsius:)
                 
             case (.celsius, .kelvin):
-                return { (input: Double) -> Double in
-                    return input + 273.15
-                }
+                return kelvin(fromCelsius:)
                 
             case (.farenheit, .celsius):
-                return { (input: Double) -> Double in
-                    return (input - 32) * 5 / 9
-                }
+                return celsius(fromFarenheit:)
                 
             case (.farenheit, .kelvin):
-                return { (input: Double) -> Double in
-                    return (input - 32) * 5 / 9 + 273.15
-                }
+                return kelvin(fromFarenheit:)
                 
             case (.kelvin, .celsius):
-                return { (input: Double) -> Double in
-                    return input - 273.15
-                }
+                return celsius(fromKelvin:)
                 
             case (.kelvin, .farenheit):
-                return { (input: Double) -> Double in
-                    return (input - 273.15) * 9 / 5 + 32
-                }
+                return farenheit(fromKelvin:)
                 
             default:
                 return { (input: Double) -> Double in
@@ -95,7 +83,7 @@ struct ContentView: View {
     private func calculateOutput(for unit: TemperatureUnit) -> Double {
         guard let inputTemperature else { return 0 }
         
-        let f = selectedTemperature.getConversionFunction(to: unit)
+        let f = selectedTemperature.getFormula(to: unit)
         return f(inputTemperature)
     }
 }
